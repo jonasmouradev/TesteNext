@@ -77,12 +77,12 @@ export default function Table() {
                 <input type="checkbox" className="checkbox" />
               </label>
             </th>
-            <th>Código</th>
-            <th>Produto</th>
-            <th>Categoria</th>
-            <th>Brand</th>
-            <th>Collab</th>
-            <th></th>
+            <th className="text-white">Código</th>
+            <th className="text-white w-72">Produto</th>
+            <th className="text-white w-72">Categoria</th>
+            <th className="text-white w-72">Brand</th>
+            <th className="text-white w-72">Collab</th>
+            <th className="text-white"></th>
           </tr>
         </thead>
         <tbody>
@@ -94,25 +94,18 @@ export default function Table() {
               </label>
             </th>
             <td>
-              <div className="flex items-center gap-3">
-                <div>
-                  <div className="font-bold">Hart Hagerty</div>
-                  <div className="text-sm opacity-50">United States</div>
-                </div>
+              <div className="flex items-center">
+                <div className="font-bold">15632</div>
               </div>
             </td>
             <td>
-              Zemlak, Daniel and Leannon
+              Air Jordan 1 Low
               <br />
-              <span className="badge badge-ghost badge-sm">
-                Desktop Support Technician
-              </span>
+              <span className="badge badge-sm">Tênis do Jordan</span>
             </td>
-            <td>Purple</td>
-            <td>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </td>
-            <th></th>
+            <td>Tênis</td>
+            <td>Nike</td>
+            <th>Jordan</th>
             <th>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +118,7 @@ export default function Table() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
             </th>
@@ -139,22 +132,17 @@ export default function Table() {
             </th>
             <td>
               <div className="flex items-center gap-3">
-                <div>
-                  <div className="font-bold">Brice Swyre</div>
-                  <div className="text-sm opacity-50">China</div>
-                </div>
+                <div className="font-bold">2</div>
               </div>
             </td>
             <td>
               Carroll Group
               <br />
-              <span className="badge badge-ghost badge-sm">Tax Accountant</span>
+              <span className="badge badge-sm">Tax Accountant</span>
             </td>
             <td>Red</td>
-            <td>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </td>
-            <th></th>
+            <td>Nike</td>
+            <th>Jordan</th>
             <th>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +155,7 @@ export default function Table() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
             </th>
@@ -181,23 +169,16 @@ export default function Table() {
             </th>
             <td>
               <div className="flex items-center gap-3">
-                <div>
-                  <div className="font-bold">Marjy Ferencz</div>
-                  <div className="text-sm opacity-50">Russia</div>
-                </div>
+                <div className="font-bold">3</div>
               </div>
             </td>
             <td>
               Rowe-Schoen
               <br />
-              <span className="badge badge-ghost badge-sm">
-                Office Assistant I
-              </span>
+              <span className="badge badge-sm">Office Assistant I</span>
             </td>
             <td>Crimson</td>
-            <td>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </td>
+            <td>Nike</td>
             <th></th>
             <th>
               <svg
@@ -211,7 +192,7 @@ export default function Table() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
             </th>
@@ -225,23 +206,18 @@ export default function Table() {
             </th>
             <td>
               <div className="flex items-center gap-3">
-                <div>
-                  <div className="font-bold">Yancy Tear</div>
-                  <div className="text-sm opacity-50">Brazil</div>
-                </div>
+                <div className="font-bold">4</div>
               </div>
             </td>
             <td>
               Wyman-Ledner
               <br />
-              <span className="badge badge-ghost badge-sm">
+              <span className="badge badge-sm">
                 Community Outreach Specialist
               </span>
             </td>
             <td>Indigo</td>
-            <td>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </td>
+            <td>Nike</td>
             <th></th>
             <th>
               <svg
@@ -255,7 +231,7 @@ export default function Table() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
             </th>

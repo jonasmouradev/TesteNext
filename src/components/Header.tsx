@@ -9,7 +9,7 @@ export default function Header() {
           <Image src={nextIcon} alt="Next Icon" />
         </div>
       </div>
-      <div className="pl-10 font-sans text-white text-xl">
+      <div className="pl-5 font-sans text-white text-xl">
         <h1>Produtos</h1>
       </div>
     </div>

@@ -7,6 +7,70 @@ export default function Table() {
   const [currentPage, setCurrentPage] = useState(1);
   // Estado para controlar o número total de páginas (exemplo: 10)
   const [totalPages, setTotalPages] = useState(10);
+  // Adicionando um novo estado para rastrear os itens selecionados
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+
+  const dados = [
+    {
+      id: 1,
+      produto: "Produto A",
+      categoria: "Categoria 1",
+      brand: "Jordan",
+      Collab: "Jordan",
+    },
+    {
+      id: 2,
+      produto: "Produto B",
+      categoria: "Categoria 2",
+      brand: "Jordan",
+      Collab: "Jordan",
+    },
+    {
+      id: 3,
+      produto: "Produto C",
+      categoria: "Categoria 3",
+      brand: "Nike",
+      Collab: "Jordan",
+    },
+    {
+      id: 4,
+      produto: "Produto D",
+      categoria: "Categoria 4",
+      brand: "Nike",
+      Collab: "Jordan",
+    },
+    {
+      id: 5,
+      produto: "Produto E",
+      categoria: "Categoria 5",
+      brand: "Vans",
+      Collab: "Jordan",
+    },
+    {
+      id: 6,
+      produto: "Produto F",
+      categoria: "Categoria 6",
+      brand: "Nike",
+      Collab: "Jordan",
+    },
+  ];
+
+  // Função para lidar com a mudança da checkbox
+  const handleCheckboxChange = (id: number, isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedItems([...selectedItems, id]);
+    } else {
+      setSelectedItems(selectedItems.filter((item) => item !== id));
+    }
+  };
+
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 4;
+
+  // Calcula o índice dos itens para a página atual
+  const indiceDoUltimoItem = paginaAtual * itensPorPagina;
+  const indiceDoPrimeiroItem = indiceDoUltimoItem - itensPorPagina;
+  const itensAtuais = dados.slice(indiceDoPrimeiroItem, indiceDoUltimoItem);
 
   return (
     <div className="overflow-x-auto pl-20">
@@ -73,9 +137,9 @@ export default function Table() {
         <thead>
           <tr>
             <th>
-              <label>
+              {/* <label>
                 <input type="checkbox" className="checkbox" />
-              </label>
+              </label> */}
             </th>
             <th className="text-white">Código</th>
             <th className="text-white w-72">Produto</th>
@@ -87,42 +151,45 @@ export default function Table() {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <td>
-              <div className="flex items-center">
-                <div className="font-bold">15632</div>
-              </div>
-            </td>
-            <td>
-              Air Jordan 1 Low
-              <br />
-              <span className="badge badge-sm">Tênis do Jordan</span>
-            </td>
-            <td>Tênis</td>
-            <td>Nike</td>
-            <th>Jordan</th>
-            <th>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          {itensAtuais.map((item, index) => (
+            <tr key={index}>
+              <th>
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  checked={selectedItems.includes(item.id)}
+                  onChange={(e) =>
+                    handleCheckboxChange(item.id, e.target.checked)
+                  }
                 />
-              </svg>
-            </th>
-          </tr>
+              </th>
+              <td className="font-bold flex items-center">{item.id}</td>
+              <td>
+                {item.produto}
+                <br />
+                <span className="badge badge-sm">Tênis do Jordan</span>
+              </td>
+              <td>Tênis</td>
+              <td>Nike</td>
+              <th>Jordan</th>
+              <th>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </th>
+            </tr>
+          ))}
           {/* row 2 */}
           <tr>
             <th>

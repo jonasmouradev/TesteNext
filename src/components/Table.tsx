@@ -1,8 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
+import useFetch from "../components/useFetch";
+import { IProduct } from "../api/tarefas/ProdutosService";
+import { ApiException } from "../api/ApiException";
+import { ProdutosService } from "../api/tarefas/ProdutosService";
 
-export default function Table() {
+const Table = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+
+  useEffect(() => {
+    ProdutosService.getAll().then((result) => {
+      if (result instanceof ApiException) {
+        alert(result.message);
+      } else {
+        setProducts(result);
+      }
+    });
+  }, []);
+
   // Estado para controlar a página atual
   const [currentPage, setCurrentPage] = useState(1);
   // Estado para controlar o número total de páginas (exemplo: 10)
@@ -10,57 +27,12 @@ export default function Table() {
   // Adicionando um novo estado para rastrear os itens selecionados
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  const dados = [
-    {
-      id: 1,
-      produto: "Produto A",
-      categoria: "Categoria 1",
-      brand: "Jordan",
-      Collab: "Jordan",
-    },
-    {
-      id: 2,
-      produto: "Produto B",
-      categoria: "Categoria 2",
-      brand: "Jordan",
-      Collab: "Jordan",
-    },
-    {
-      id: 3,
-      produto: "Produto C",
-      categoria: "Categoria 3",
-      brand: "Nike",
-      Collab: "Jordan",
-    },
-    {
-      id: 4,
-      produto: "Produto D",
-      categoria: "Categoria 4",
-      brand: "Nike",
-      Collab: "Jordan",
-    },
-    {
-      id: 5,
-      produto: "Produto E",
-      categoria: "Categoria 5",
-      brand: "Vans",
-      Collab: "Jordan",
-    },
-    {
-      id: 6,
-      produto: "Produto F",
-      categoria: "Categoria 6",
-      brand: "Nike",
-      Collab: "Jordan",
-    },
-  ];
-
   // Função para lidar com a mudança da checkbox
   const handleCheckboxChange = (id: number, isChecked: boolean) => {
     if (isChecked) {
       setSelectedItems([...selectedItems, id]);
     } else {
-      setSelectedItems(selectedItems.filter((item) => item !== id));
+      setSelectedItems(selectedItems.filter((product) => product !== id));
     }
   };
 
@@ -70,7 +42,9 @@ export default function Table() {
   // Calcula o índice dos itens para a página atual
   const indiceDoUltimoItem = paginaAtual * itensPorPagina;
   const indiceDoPrimeiroItem = indiceDoUltimoItem - itensPorPagina;
-  const itensAtuais = dados.slice(indiceDoPrimeiroItem, indiceDoUltimoItem);
+  const itensAtuais = products
+    ? products.slice(indiceDoPrimeiroItem, indiceDoUltimoItem)
+    : [];
 
   return (
     <div className="overflow-x-auto pl-20">
@@ -151,27 +125,27 @@ export default function Table() {
         </thead>
         <tbody>
           {/* row 1 */}
-          {itensAtuais.map((item, index) => (
-            <tr key={index}>
+          {products.map((product: IProduct) => (
+            <tr key={product.id}>
               <th>
                 <input
                   type="checkbox"
                   className="checkbox"
-                  checked={selectedItems.includes(item.id)}
+                  checked={selectedItems.includes(product.id)}
                   onChange={(e) =>
-                    handleCheckboxChange(item.id, e.target.checked)
+                    handleCheckboxChange(product.id, e.target.checked)
                   }
                 />
               </th>
-              <td className="font-bold flex items-center">{item.id}</td>
+              <td className="font-bold flex items-center">{product.id}</td>
               <td>
-                {item.produto}
+                {product.name}
                 <br />
-                <span className="badge badge-sm">Tênis do Jordan</span>
+                <span className="badge badge-sm">{product.description}</span>
               </td>
-              <td>Tênis</td>
-              <td>Nike</td>
-              <th>Jordan</th>
+              <td>{product.category}</td>
+              <td>{product.brand}</td>
+              <th>{product.collab}</th>
               <th>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -190,119 +164,6 @@ export default function Table() {
               </th>
             </tr>
           ))}
-          {/* row 2 */}
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="font-bold">2</div>
-              </div>
-            </td>
-            <td>
-              Carroll Group
-              <br />
-              <span className="badge badge-sm">Tax Accountant</span>
-            </td>
-            <td>Red</td>
-            <td>Nike</td>
-            <th>Jordan</th>
-            <th>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-            </th>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="font-bold">3</div>
-              </div>
-            </td>
-            <td>
-              Rowe-Schoen
-              <br />
-              <span className="badge badge-sm">Office Assistant I</span>
-            </td>
-            <td>Crimson</td>
-            <td>Nike</td>
-            <th></th>
-            <th>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-            </th>
-          </tr>
-          {/* row 4 */}
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="font-bold">4</div>
-              </div>
-            </td>
-            <td>
-              Wyman-Ledner
-              <br />
-              <span className="badge badge-sm">
-                Community Outreach Specialist
-              </span>
-            </td>
-            <td>Indigo</td>
-            <td>Nike</td>
-            <th></th>
-            <th>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-            </th>
-          </tr>
         </tbody>
         {/* foot */}
         <tfoot>
@@ -339,4 +200,6 @@ export default function Table() {
       </table>
     </div>
   );
-}
+};
+
+export default Table;

@@ -1,9 +1,7 @@
 {
   "error": false,
   "message": "Produtos listados com sucesso!",
-  "data": {
-    "current_page": 1,
-    "data": [
+    "products": [
       {
         "id": 1,
         "code": "15632",
@@ -96,4 +94,3 @@
       }
     ]
   }
-}

@@ -6,13 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mock": "json-server --watch dadosJson/db.json --port 3001"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "json-server": "^1.0.0-beta.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-router-dom": "^6.23.1",
     "sharp": "^0.33.3"
   },
   "devDependencies": {

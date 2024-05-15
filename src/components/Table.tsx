@@ -1,14 +1,25 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
-import useFetch from "../components/useFetch";
+import React, { useState, useEffect } from "react";
 import { IProduct } from "../api/tarefas/ProdutosService";
 import { ApiException } from "../api/ApiException";
 import { ProdutosService } from "../api/tarefas/ProdutosService";
 
 const Table = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const itemsPerPage = 5;
+
+  // Filtra os produtos com base na pesquisa
+  const productsSearch = products.filter(
+    (product) =>
+      product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.description.toLowerCase().includes(search.toLowerCase()) ||
+      product.category.toLowerCase().includes(search.toLowerCase()) ||
+      product.brand.toLowerCase().includes(search.toLowerCase()) ||
+      product.collab.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     ProdutosService.getAll().then((result) => {
@@ -20,10 +31,8 @@ const Table = () => {
     });
   }, []);
 
-  // Estado para controlar a página atual
-  const [currentPage, setCurrentPage] = useState(1);
-  // Estado para controlar o número total de páginas (exemplo: 10)
-  const [totalPages, setTotalPages] = useState(10);
+  // Calcula o total de páginas com base nos produtos filtrados
+  const totalPages = Math.ceil(productsSearch.length / itemsPerPage);
   // Adicionando um novo estado para rastrear os itens selecionados
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -36,25 +45,22 @@ const Table = () => {
     }
   };
 
-  const [paginaAtual, setPaginaAtual] = useState(1);
-  const itensPorPagina = 4;
-
-  // Calcula o índice dos itens para a página atual
-  const indiceDoUltimoItem = paginaAtual * itensPorPagina;
-  const indiceDoPrimeiroItem = indiceDoUltimoItem - itensPorPagina;
-  const itensAtuais = products
-    ? products.slice(indiceDoPrimeiroItem, indiceDoUltimoItem)
-    : [];
+  // Calculates the indices of the items for the current page
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentProducts = productsSearch.slice(firstItemIndex, lastItemIndex);
 
   return (
     <div className="overflow-x-auto pl-20">
       <div className="flex flex-row items-center pb-10">
-        <h1 className="px-5 text-xl text-white">Produtos</h1>
+        <h1 className="px-5 text-xl text-white">Products</h1>
         <label className="input input-bordered flex items-center gap-2 flex-auto max-w-80">
           <input
             type="text"
             className="grow"
-            placeholder="Buscar Produtos..."
+            placeholder="Search Products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,9 +117,9 @@ const Table = () => {
         <thead>
           <tr>
             <th>
-              {/* <label>
+              <label>
                 <input type="checkbox" className="checkbox" />
-              </label> */}
+              </label>
             </th>
             <th className="text-white">Código</th>
             <th className="text-white w-72">Produto</th>
@@ -124,8 +130,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {/* row 1 */}
-          {products.map((product: IProduct) => (
+          {/* rows */}
+          {currentProducts.map((product: IProduct) => (
             <tr key={product.id}>
               <th>
                 <input
@@ -137,7 +143,7 @@ const Table = () => {
                   }
                 />
               </th>
-              <td className="font-bold flex items-center">{product.id}</td>
+              <td className="font-bold flex items-center">{product.code}</td>
               <td>
                 {product.name}
                 <br />
@@ -153,7 +159,7 @@ const Table = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-6 h-6 hover:text-blue-500 cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -168,31 +174,66 @@ const Table = () => {
         {/* foot */}
         <tfoot>
           <tr>
-            <th colSpan={5}>
+            <th colSpan={6}>
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <button
-                  className="btn btn-ghost btn-xs"
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Anterior
-                </button>
-                <span>
-                  Página {currentPage} de {totalPages}
-                </span>
-                <button
-                  className="btn btn-ghost btn-xs"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Próxima
-                </button>
+                <div>
+                  <span>
+                    Exibindo {firstItemIndex + 1}-
+                    {Math.min(lastItemIndex, products.length)} de{" "}
+                    {products.length} itens
+                  </span>
+                </div>
+                <div>
+                  {" "}
+                  <span className="pr-5">
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <button
+                    className="btn btn-ghost btn-xs"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    className="btn btn-ghost btn-xs"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={
+                      currentPage === totalPages ||
+                      products.length <= itemsPerPage
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </th>
           </tr>

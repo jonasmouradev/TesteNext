@@ -21,3 +21,7 @@ Para executar este projeto localmente, siga os passos abaixo:
 
 A aplicação estará disponível em `http://localhost:3000`.
 A API estará disponível em `http://localhost:3001/products`
+
+Obs: é importante que o JSON Server esteja em funcionamento para que os items apareçam na lista.
+
+`https://text-next-jonasmouradevs-projects.vercel.app`

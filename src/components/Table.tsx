@@ -9,7 +9,7 @@ const Table = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   // Filtra os produtos com base na pesquisa
   const productsSearch = products.filter(
@@ -79,22 +79,23 @@ const Table = () => {
   }, [isSorted]);
 
   // Função para alternar o estado de ordenação
+  const [filterValue, setFilterValue] = useState(""); // Declare the filterValue variable
+
   const toggleSort = () => {
     setIsSorted(!isSorted);
   };
   const [selectAll, setSelectAll] = useState(false);
 
   const filterProducts = () => {
-    if (!filterValue) return products; // Se não houver valor de filtro, retorna todos os produtos
-
+    if (!filterValue) return products;
     return products.filter((product) =>
       product.name.toLowerCase().includes(filterValue.toLowerCase())
     );
   };
 
   return (
-    <div className="overflow-x-auto pl-20">
-      <div className="flex flex-row items-center py-10">
+    <div className="overflow-x-auto px-20">
+      <div className="md:flex flex-row items-center py-10 2xl:py-0">
         <h1 className="px-5 text-xl text-white">Products</h1>
         <label className="input input-bordered flex items-center gap-2 flex-auto max-w-80">
           <input

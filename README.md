@@ -21,3 +21,5 @@ Para executar este projeto localmente, siga os passos abaixo:
 
 A aplicação estará disponível em `http://localhost:3000`.
 A API estará disponível em `http://localhost:3001/products`
+
+https://text-next-jonasmouradevs-projects.vercel.app

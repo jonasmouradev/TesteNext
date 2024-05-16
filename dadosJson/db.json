@@ -1,6 +1,4 @@
 {
-  "error": false,
-  "message": "Produtos listados com sucesso!",
   "products": [
     {
       "id": 1,

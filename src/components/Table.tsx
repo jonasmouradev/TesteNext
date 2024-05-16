@@ -36,7 +36,7 @@ const Table = () => {
   // Adicionando um novo estado para rastrear os itens selecionados
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  // Função para lidar com a mudança da checkbox
+  // Lida com a mudança da checkbox
   const handleCheckboxChange = (id: number, isChecked: boolean) => {
     if (isChecked) {
       setSelectedItems([...selectedItems, id]);
@@ -45,7 +45,7 @@ const Table = () => {
     }
   };
 
-  // Calculates the indices of the items for the current page
+  // Calcula o indice dos itens para a página atual
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentProducts = productsSearch.slice(firstItemIndex, lastItemIndex);

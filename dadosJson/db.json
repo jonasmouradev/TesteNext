@@ -6,7 +6,7 @@
       "name": "Air Jordan 1 Low",
       "description": "Tenis do Jordan",
       "category": "Tênis",
-      "brand": "Jordan",
+      "brand": "Nike",
       "collab": "Jordan"
     },
     {
@@ -15,7 +15,7 @@
       "name": "Air Jordan 1 Low",
       "description": "Tenis do Jordan",
       "category": "Tênis",
-      "brand": "Jordan",
+      "brand": "Nike",
       "collab": "NOCTA"
     },
     {
@@ -24,8 +24,8 @@
       "name": "Air Force Low",
       "description": "Tenis da moda tiktok",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Yeezy"
+      "brand": "Nike",
+      "collab": ""
     },
     {
       "id": 4,
@@ -33,8 +33,8 @@
       "name": "Air Force Low",
       "description": "Tenis da moda tiktok",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Off-White"
+      "brand": "Nike",
+      "collab": ""
     },
     {
       "id": 5,
@@ -42,8 +42,8 @@
       "name": "Vans Old Skool",
       "description": "Tenis brabo da vans",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Gucci"
+      "brand": "Vans",
+      "collab": ""
     },
     {
       "id": 6,
@@ -52,7 +52,7 @@
       "description": "Tenis de rico",
       "category": "Tênis",
       "brand": "Jordan",
-      "collab": "Nike"
+      "collab": "Off-White"
     },
     {
       "id": 7,
@@ -60,8 +60,8 @@
       "name": "Yeezy Slide",
       "description": "Chinelo Pica",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Adidas"
+      "brand": "Adidas",
+      "collab": "Yeezy"
     },
     {
       "id": 8,
@@ -69,8 +69,8 @@
       "name": "Yeezy Boost 350",
       "description": "Pisar fofo",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Puma"
+      "brand": "Yeezy",
+      "collab": ""
     },
     {
       "id": 9,
@@ -78,8 +78,8 @@
       "name": "Puma Suede",
       "description": "Tenis do Jordan",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Vans"
+      "brand": "Puma",
+      "collab": ""
     },
     {
       "id": 10,
@@ -87,8 +87,8 @@
       "name": "Nike SB",
       "description": "Tenis brabo",
       "category": "Tênis",
-      "brand": "Jordan",
-      "collab": "Converse"
+      "brand": "Nike",
+      "collab": ""
     }
   ]
 }

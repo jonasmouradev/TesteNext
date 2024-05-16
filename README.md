@@ -21,3 +21,5 @@ Para executar este projeto localmente, siga os passos abaixo:
 
 A aplicação estará disponível em `http://localhost:3000`.
 A API estará disponível em `http://localhost:3001/products`
+
+Obs: Para que os itens apareçam na lista, é importante que o JSON Server esteja sendo executado.

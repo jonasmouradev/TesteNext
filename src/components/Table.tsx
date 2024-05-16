@@ -38,10 +38,21 @@ const Table = () => {
 
   // Lida com a mudança da checkbox
   const handleCheckboxChange = (id: number, isChecked: boolean) => {
-    if (isChecked) {
-      setSelectedItems([...selectedItems, id]);
+    if (id === -1) {
+      setSelectAll(isChecked);
+      if (isChecked) {
+        setSelectedItems(currentProducts.map((product) => product.id)); // Seleciona todos
+      } else {
+        setSelectedItems([]); // Deseleciona todos
+      }
     } else {
-      setSelectedItems(selectedItems.filter((product) => product !== id));
+      if (isChecked) {
+        setSelectedItems([...selectedItems, id]);
+      } else {
+        setSelectedItems(selectedItems.filter((product) => product !== id));
+      }
+      // Atualiza o estado de selectAll baseado na seleção individual
+      setSelectAll(selectedItems.length + 1 === currentProducts.length);
     }
   };
 
@@ -50,15 +61,46 @@ const Table = () => {
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentProducts = productsSearch.slice(firstItemIndex, lastItemIndex);
 
+  const [isSorted, setIsSorted] = useState(false); // Passo 1: Estado para controle da ordenação
+
+  useEffect(() => {
+    ProdutosService.getAll().then((result) => {
+      if (result instanceof ApiException) {
+        alert(result.message);
+      } else {
+        let sortedProducts = result;
+        if (isSorted) {
+          // Passo 2: Aplica a ordenação quando isSorted é true
+          sortedProducts = result.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        setProducts(sortedProducts);
+      }
+    });
+  }, [isSorted]);
+
+  // Função para alternar o estado de ordenação
+  const toggleSort = () => {
+    setIsSorted(!isSorted);
+  };
+  const [selectAll, setSelectAll] = useState(false);
+
+  const filterProducts = () => {
+    if (!filterValue) return products; // Se não houver valor de filtro, retorna todos os produtos
+
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  };
+
   return (
     <div className="overflow-x-auto pl-20">
-      <div className="flex flex-row items-center pb-10">
+      <div className="flex flex-row items-center py-10">
         <h1 className="px-5 text-xl text-white">Products</h1>
         <label className="input input-bordered flex items-center gap-2 flex-auto max-w-80">
           <input
             type="text"
             className="grow"
-            placeholder="Search Products..."
+            placeholder="Buscar Produtos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -93,7 +135,10 @@ const Table = () => {
             </svg>
             Filtrar
           </button>
-          <button className="btn btn-neutral mr-6 bg-zinc-600 text-white">
+          <button
+            onClick={toggleSort}
+            className="btn btn-neutral mr-6 bg-zinc-600 text-white"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -117,9 +162,12 @@ const Table = () => {
         <thead>
           <tr>
             <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={selectAll}
+                onChange={(e) => handleCheckboxChange(-1, e.target.checked)}
+              />
             </th>
             <th className="text-white">Código</th>
             <th className="text-white w-72">Produto</th>

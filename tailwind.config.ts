@@ -8,10 +8,11 @@ const config: Config = {
   ],
   darkMode: "class",
   theme: {
-    extend: {
-      daisyui: {},
-    },
+    extend: {},
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["dark"],
+  },
 };
 export default config;
